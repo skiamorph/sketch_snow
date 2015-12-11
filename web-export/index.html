@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>sketch_hex : Built with Processing and Processing.js</title>
+		<link rel="icon"  type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAQAAVzABAEAjBQAaDwYAWjUGAGE6CQBrQQ0ATS8PAFhAJwBUQC8AbFI6AHVXPACBZk4A4NrWAPb19QAAAAAAAMmZmZmZmgAJIwAAAAAAcMIjPjA+PjAKpxIuMDMzMAm0Ii4zMzMACaIiLt3dMAAJtyIuIzPQAAm0Un5yM+IzKLRkfncy4iIotRF+dyLkIiq0QX53F+EiGrQUTkd34iIatEVu7u5iIVrBVVRBRFRVbAtGZGZla2uwAMu7u7u8vADAAwAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAADAAwAA" />
+		<meta name="Generator" content="Processing" />
+		<!-- - - - - - - - - - - - - - - - - - - - - 
+		+
+		+    Wondering how this works? 
+		+
+		+    Go to: http://processing.org/
+		+    and: http://processingjs.org/
+		+
+		+ - - - - - - - - - - - - - - - - - - - - -->
+		<link href='https://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+        <style type="text/css">
+	body {
+        margin: 0;
+	  background-color: #333; color: #bbb; line-height: normal;
+	  font-family: Lucida Grande, Lucida Sans, Arial, Helvetica Neue, Verdana, Geneva, sans-serif;
+	  font-size: 11px; font-weight: normal; text-decoration: none;
+		  line-height: 1.5em;
+	}
+	a img { 
+		border: 0px solid transparent;
+	}
+	a, a:link, a:visited, a:active, a:hover { 
+		color: #cdcdcd; text-decoration: underline;
+	}
+	h1,p {
+	    font-family: 'Oleo Script', cursive;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+		width: 100%; 
+        line-height: normal;
+		margin-bottom: 1em; 
+        
+        color: white;
+        opacity:0;
+        
+	}
+            h1{
+                font-size: 72px;
+            }
+            p{
+                font-size: 36px;
+                text-align: right;
+            }
+            .shown{
+                opacity: 1;
+                transition:opacity 1s;
+                transition-timing-function: ease;
+            }        
+	canvas#sketchsnow { 
+		display: block; 
+		outline: 0px; 
+		margin:0; 
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -100;
+        transform: translateX(-50%) translateY(-50%);
+	}
+	#content { 
+		margin: 10% 10% auto auto; /*padding: 5% 5% 3% 5%;*/
+		min-width: 300px; 
+        float: left;
+        overflow: auto;
+		/*border-left: 1px solid #444; border-top: 1px solid #444; 
+		border-right: 1px solid #333; border-bottom: 1px solid #333;*/
+		background: rgba(61,61,61,0) none repeat scroll 0% 0%;
+        
+	}
+            canvas#canvas{
+                margin-left: 0px;
+                margin-top: 10%;
+                float: left;
+            }
+            
+		</style>
+		<!--[if lt IE 9]>
+			<script type="text/javascript">alert("Your browser does not support the canvas tag.");</script>
+		<![endif]-->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+		<script src="processing.js" type="text/javascript"></script>
+		<script type="text/javascript">
+// convenience function to get the id attribute of generated sketch html element
+        function getProcessingSketchId () { return 'sketchsnow'; }
+        </script>
+        
+        <!--olaf animation-->
+        <script src="http://code.createjs.com/easeljs-0.8.1.min.js"></script>
+        <script src="http://code.createjs.com/tweenjs-0.6.1.min.js"></script>
+        <script src="http://code.createjs.com/movieclip-0.8.1.min.js"></script>
+        <script src="http://code.createjs.com/preloadjs-0.6.1.min.js"></script>
+        <script src="olaf_tween_Canvas.js"></script>
+        <script>
+            var canvas, stage, exportRoot;
+
+            function init() {
+                canvas = document.getElementById("canvas");
+                images = images||{};
+
+                var loader = new createjs.LoadQueue(false);
+                loader.addEventListener("fileload", handleFileLoad);
+                loader.addEventListener("complete", handleComplete);
+                loader.loadManifest(lib.properties.manifest);
+                canvas.style.backgroundColor="rgba(0,0,0,0)";
+                
+            }
+
+            function handleFileLoad(evt) {
+                if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+            }
+
+            function handleComplete(evt) {
+                exportRoot = new lib.olaf_tween_Canvas();
+
+                stage = new createjs.Stage(canvas);
+                stage.addChild(exportRoot);
+                stage.update();
+
+                createjs.Ticker.setFPS(lib.properties.fps);
+                createjs.Ticker.addEventListener("tick", stage);
+            }
+        </script>
+
+	</head>
+	<body onload="init();" style="background-color:#D4D4D4">
+<!--
+		<div id="content">
+			<div>
+-->
+				<canvas id="sketchsnow" data-processing-sources="sketch_snow.pde">
+					<p>Your browser does not support the canvas tag.</p>
+					<!-- Note: you can put any alternative content here. -->
+				</canvas>
+				<noscript>
+					<p>JavaScript is required to view the contents of this page.</p>
+				</noscript>
+        <canvas id="canvas" width="640" height="480"></canvas>
+                <div id="content">
+                    <h1 id="greeting"> Happy
+                        <br>&nbsp;holidays!</h1>
+                    <p id="signed">-with love
+                    <br>Mimi</p>
+                    
+                    
+                </div>
+        
+<!--
+	    	</div>
+			<h1>sketch_hex</h1>
+    		<p id="description"></p>
+			<p id="sources">Source code: <a href="sketch_hex.pde">sketch_hex</a> </p>
+			<p>
+			Built with <a href="http://processing.org" title="Processing">Processing</a>
+			and <a href="http://processingjs.org" title="Processing.js">Processing.js</a>
+			</p>
+		</div>
+	</body>
+-->
+</html>
